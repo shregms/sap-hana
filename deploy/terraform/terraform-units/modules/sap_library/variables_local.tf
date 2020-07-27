@@ -23,7 +23,6 @@ locals {
     sa_sapbits_name                     = local.sa_sapbits_exists ? "": "sapbits${random_id.post-fix.hex}"
     sa_sapbits_arm_id                   = local.sa_sapbits_exists ? try(var.storage_account_sapbits.arm_id, "") : ""
     sa_sapbits_enable_secure_transfer   = true
-    sa_sapbits_delete_retention_policy  = 7
 
     // Storage account for tfstate, json and deployer
     sa_tfstate_exists                   = try(var.storage_account_tfstate.is_existing, false)
