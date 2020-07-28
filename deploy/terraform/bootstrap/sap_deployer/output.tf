@@ -23,3 +23,7 @@ output "nsg-mgmt" {
 output "deployer-uai" {
   value = module.sap_deployer.deployer-uai
 }
+
+output "deployer" {
+  value = module.sap_deployer.deployers
+}

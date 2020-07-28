@@ -36,6 +36,6 @@ output "deployer-pip" {
 
 // Details of deployer(s)
 output "deployers" {
-  value = local.deployers
+  value = local.deployers_updated
 }
 
