@@ -40,8 +40,8 @@ resource "azurerm_network_interface" "rti" {
 
   ip_configuration {
     name                          = "${local.rti[count.index].name}-nic1-ip"
-    subnet_id                     = var.subnet-mgmt[0].id
-    private_ip_address            = local.sub_mgmt_exists ? local.rti[count.index].private_ip_address : (lookup(local.rti[count.index], "private_ip_address", "") != "" ? local.rti[count.index].private_ip_address : cidrhost(var.subnet-mgmt[0].address_prefix, (count.index + 4 + length(local.vm-jump-win) + length(local.vm-jump-linux))))
+    subnet_id                     = var.subnet-mgmt.id
+    private_ip_address            = local.rti[count.index].private_ip_address
     private_ip_address_allocation = "static"
     public_ip_address_id          = azurerm_public_ip.rti[count.index].id
   }
