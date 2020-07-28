@@ -1,6 +1,6 @@
 /*
     Description:
-      Import resources
+      Import deployer resources
 */
 
 data "terraform_remote_state" "deployer" {

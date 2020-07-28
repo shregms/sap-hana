@@ -7,10 +7,16 @@ variable "subnet-sap-admin" {
   description = "Information about SAP admin subnet"
 }
 
-// Import config
-locals {
-  config_path     = "../../bootstrap/.deploy/sa_config.json"
-  deployer_config = jsondecode(file(local.config_path))
+variable "vnet-mgmt" {
+  description = "describe your variable"
+}
+
+variable "subnet-mgmt" {
+  description = "describe your variable"
+}
+
+variable "nsg-mgmt" {
+  description = "describe your variable"
 }
 
 # Set defaults

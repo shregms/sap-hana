@@ -2,8 +2,13 @@
   Description:
   Setup common infrastructure
 */
+
+module "deployer" {
+  source = "../../terraform-units/modules/sap_system/deployer"
+}
+
 module "common_infrastructure" {
-  source              = "./../modules/common_infrastructure"
+  source              = "../../terraform-units/modules/sap_system/common_infrastructure"
   is_single_node_hana = "true"
   application         = var.application
   databases           = var.databases
@@ -14,11 +19,14 @@ module "common_infrastructure" {
   ssh-timeout         = var.ssh-timeout
   sshkey              = var.sshkey
   subnet-sap-admin    = module.hdb_node.subnet-sap-admin
+  vnet-mgmt           = module.deployer.vnet-mgmt
+  subnet-mgmt         = module.deployer.subnet-mgmt
+  nsg-mgmt            = module.deployer.nsg-mgmt
 }
 
-// Create Jumpboxes and RTI box
+// Create Jumpboxes
 module "jumpbox" {
-  source            = "./../modules/jumpbox"
+  source            = "../../terraform-units/modules/sap_system/jumpbox"
   application       = var.application
   databases         = var.databases
   infrastructure    = var.infrastructure
@@ -38,7 +46,7 @@ module "jumpbox" {
 
 // Create HANA database nodes
 module "hdb_node" {
-  source           = "./../modules/hdb_node"
+  source           = "../../terraform-units/modules/sap_system/hdb_node"
   application      = var.application
   databases        = var.databases
   infrastructure   = var.infrastructure
@@ -57,7 +65,7 @@ module "hdb_node" {
 
 // Create Application Tier nodes
 module "app_tier" {
-  source           = "./../modules/app_tier"
+  source           = "../../terraform-units/modules/sap_system/app_tier"
   application      = var.application
   databases        = var.databases
   infrastructure   = var.infrastructure
@@ -75,7 +83,7 @@ module "app_tier" {
 
 // Create anydb database nodes
 module "anydb_node" {
-  source           = "./../modules/anydb_node"
+  source           = "../../terraform-units/modules/sap_system/anydb_node"
   application      = var.application
   databases        = var.databases
   infrastructure   = var.infrastructure
@@ -92,7 +100,7 @@ module "anydb_node" {
 
 // Generate output files
 module "output_files" {
-  source                       = "./../modules/output_files"
+  source                       = "../../terraform-units/modules/sap_system/output_files"
   application                  = var.application
   databases                    = var.databases
   infrastructure               = var.infrastructure
@@ -121,5 +129,5 @@ module "output_files" {
   nics-anydb                   = module.anydb_node.nics-anydb
   any-database-info            = module.anydb_node.any-database-info
   anydb-loadbalancers          = module.anydb_node.anydb-loadbalancers
-
+  deployers                    = module.deployer.import_deployer
 }

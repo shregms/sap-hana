@@ -32,38 +32,10 @@ locals {
   # Linux jumpbox information
   vm-jump-linux = [
     for jumpbox in var.jumpboxes.linux : jumpbox
-    if jumpbox.destroy_after_deploy != "true"
   ]
 
   # Windows jumpbox information
   vm-jump-win = [
     for jumpbox in var.jumpboxes.windows : jumpbox
-  ]
-
-  # RTI information with default count 1
-  rti_updated = [
-    for jumpbox in var.jumpboxes.linux : merge({ "private_ip_address" = "" }, jumpbox)
-    if jumpbox.destroy_after_deploy == "true"
-  ]
-  rti = length(local.rti_updated) > 0 ? local.rti_updated : [
-    {
-      "name"                 = "rti",
-      "destroy_after_deploy" = "true",
-      "size"                 = "Standard_D2s_v3",
-      "disk_type"            = "StandardSSD_LRS",
-      "os" = {
-        "publisher" = "Canonical",
-        "offer"     = "UbuntuServer",
-        "sku"       = "18.04-LTS"
-      },
-      "authentication" = {
-        "type"     = "key",
-        "username" = "azureadm"
-      },
-      "components" = [
-        "ansible"
-      ],
-      "private_ip_address" = ""
-    }
   ]
 }

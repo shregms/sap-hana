@@ -7,11 +7,11 @@ output "vnet-sap" {
 }
 
 output "subnet-mgmt" {
-  value = data.azurerm_subnet.subnet-mgmt
+  value = var.subnet-mgmt
 }
 
 output "nsg-mgmt" {
-  value = data.azurerm_network_security_group.nsg-mgmt
+  value = var.nsg-mgmt
 }
 
 output "storage-bootdiag" {

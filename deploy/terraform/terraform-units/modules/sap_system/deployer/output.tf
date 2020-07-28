@@ -1,0 +1,15 @@
+output "import_deployer" {
+  value = data.terraform_remote_state.deployer.outputs.deployer
+}
+
+output "vnet-mgmt" {
+  value = data.azurerm_virtual_network.vnet-mgmt
+}
+
+output "subnet-mgmt" {
+  value = data.azurerm_subnet.subnet-mgmt
+}
+
+output "nsg-mgmt" {
+  value = data.azurerm_network_security_group.nsg-mgmt
+}
